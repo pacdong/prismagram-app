@@ -40,11 +40,11 @@ export default ({ navigation }) => {
       if (requestSecret) {
         await requestSecretMutation();
         Alert.alert("Check your email");
-        navigation.navigate("Confirm");
+        navigation.navigate("Confirm", { email: value });
         return;
       } else {
         Alert.alert("Can't log in now");
-        navigation.navigate("Signup");
+        navigation.navigate("Signup", { email: value });
       }
     } catch (e) {
     } finally {
