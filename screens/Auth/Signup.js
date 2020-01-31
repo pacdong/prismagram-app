@@ -10,7 +10,9 @@ const View = styled.View`
 const Text = styled.Text``;
 
 export default () => {
-  <View>
-    <Text>Signup</Text>
-  </View>;
+  return (
+    <View>
+      <Text>Signup</Text>
+    </View>
+  );
 };
