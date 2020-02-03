@@ -30,7 +30,7 @@ export default createBottomTabNavigator(
       screen: stackFactory(Home, {
         title: "Home",
         headerRight: () => <MessagesLink />,
-        headerTitle: (
+        headerTitle: () => (
           <Image style={{ height: 32 }} resizeMode="contain" source={LOGO} />
         )
       }),

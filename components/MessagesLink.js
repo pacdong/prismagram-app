@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform } from "react-native";
 import styled from "styled-components";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { withNavigation } from "react-navigation";
 import styles from "../styles";
 import NavIcon from "./NavIcon";
@@ -12,9 +12,8 @@ const Container = styled.TouchableOpacity`
 
 export default withNavigation(({ navigation }) => (
   <Container onPress={() => navigation.navigate("MessageNavigation")}>
-    <FontAwesome
-      name={Platform.OS === "ios" ? "paper-plane" : "paper-plane-o"}
-      size={20}
+    <NavIcon
+      name={Platform.OS === "ios" ? "ios-paper-plane" : "md-paper-plane"}
     />
   </Container>
 ));
