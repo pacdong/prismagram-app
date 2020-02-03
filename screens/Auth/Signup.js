@@ -28,6 +28,14 @@ const GoogleContainer = styled.View`
   margin-top: 12px;
 `;
 
+const KakaoContainer = styled.View`
+  margin-top: 12px;
+`;
+
+const NaverContainer = styled.View`
+  margin-top: 12px;
+`;
+
 export default ({ navigation }) => {
   const fNameInput = useInput("");
   const lNameInput = useInput("");
@@ -173,6 +181,20 @@ export default ({ navigation }) => {
             text="Connect Google"
           />
         </GoogleContainer>
+        <KakaoContainer>
+          <AuthButton
+            bgColor={"#FFCD00"}
+            loading={false}
+            text="Connect KakaoTalk"
+          />
+        </KakaoContainer>
+        <NaverContainer>
+          <AuthButton
+            bgColor={"#00C63B"}
+            loading={false}
+            text="Connect Naver"
+          />
+        </NaverContainer>
       </View>
     </TouchableWithoutFeedback>
   );
