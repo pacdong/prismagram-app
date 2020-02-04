@@ -26,19 +26,6 @@ const stackFactory = (initialRoute, customConfig) =>
 
 export default createBottomTabNavigator(
   {
-    Search: {
-      screen: stackFactory(Search, {
-        title: "Search"
-      }),
-      navigationOptions: {
-        tabBarIcon: ({ focused }) => (
-          <NavIcon
-            focused={focused}
-            name={Platform.OS === "ios" ? "ios-search" : "md-search"}
-          />
-        )
-      }
-    },
     Home: {
       screen: stackFactory(Home, {
         title: "Home",
@@ -52,6 +39,19 @@ export default createBottomTabNavigator(
           <NavIcon
             focused={focused}
             name={Platform.OS === "ios" ? "ios-home" : "md-home"}
+          />
+        )
+      }
+    },
+    Search: {
+      screen: stackFactory(Search, {
+        title: "Search"
+      }),
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <NavIcon
+            focused={focused}
+            name={Platform.OS === "ios" ? "ios-search" : "md-search"}
           />
         )
       }

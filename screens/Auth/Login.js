@@ -38,7 +38,6 @@ export default ({ navigation }) => {
         data: { requestSecret }
       } = await requestSecretMutation();
       if (requestSecret) {
-        await requestSecretMutation();
         Alert.alert("Check your email");
         navigation.navigate("Confirm", { email: value });
         return;

@@ -5,17 +5,51 @@ import { Ionicons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import Swiper from "react-native-swiper";
 import constants from "../constants";
+import { Logo } from "../Icon";
 
 const Container = styled.View``;
+
+const Card = styled.View`
+  background-color: white;
+`;
+
+const HeaderHelloContainer = styled.View`
+  margin-left: 18px;
+  margin-right: 18px;
+`;
+
+const HederLogoContainer = styled.View`
+  padding: 15px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const LogoContainer = styled.Image`
+  width: ${constants.width / 16};
+`;
+
+const Hello = styled.Text`
+  font-weight: 800;
+  font-size: 24px;
+`;
+
+const HelloUser = styled.Text`
+  font-weight: 600;
+  font-size: 24px;
+`;
+
 const Header = styled.View`
   padding: 15px;
   flex-direction: row;
   align-items: center;
 `;
+
 const Touchable = styled.TouchableOpacity``;
 const HeaderUserContainer = styled.View`
   margin-left: 10px;
 `;
+
 const Bold = styled.Text`
   font-weight: 500;
 `;
@@ -27,40 +61,61 @@ const IconsContainer = styled.View`
   padding: 10px;
   flex-direction: row;
 `;
-const IconContainer = styled.View`
-  margin-right: 10px;
-`;
+const IconContainer = styled.View``;
 
 const MainPost = ({ user, location, files = [] }) => {
   return (
-    <Container>
-      <Header>
-        <Touchable>
+    <>
+      <Card>
+        <HeaderHelloContainer>
+          <HederLogoContainer>
+            <Container>
+              <Hello>안녕하세요.</Hello>
+              <HelloUser>{user.username}님</HelloUser>
+            </Container>
+            <LogoContainer
+              resizeMode={"contain"}
+              source={require("../assets/logo.png")}
+            />
+          </HederLogoContainer>
+        </HeaderHelloContainer>
+        <IconContainer>
           <Image
             style={{ height: 40, width: 40, borderRadius: 20 }}
-            source={{ uri: user.avatar }}
+            source={require("../assets/RigIcon.svg")}
           />
-        </Touchable>
-        <Touchable>
-          <HeaderUserContainer>
-            <Bold>{user.username}</Bold>
-            <Location>{location}</Location>
-          </HeaderUserContainer>
-        </Touchable>
-      </Header>
-      <Swiper
-        showsPagination={false}
-        style={{ height: constants.height / 2.5 }}
-      >
-        {files.map(file => (
-          <Image
-            style={{ width: constants.width, height: constants.height / 2.5 }}
-            key={file.id}
-            source={{ uri: file.url }}
-          />
-        ))}
-      </Swiper>
-    </Container>
+        </IconContainer>
+      </Card>
+
+      <Container>
+        <Header>
+          <Touchable>
+            <Image
+              style={{ height: 40, width: 40, borderRadius: 20 }}
+              source={{ uri: user.avatar }}
+            />
+          </Touchable>
+          <Touchable>
+            <HeaderUserContainer>
+              <Bold>{user.username}</Bold>
+              <Location>{location}</Location>
+            </HeaderUserContainer>
+          </Touchable>
+        </Header>
+        <Swiper
+          showsPagination={false}
+          style={{ height: constants.height / 2.5 }}
+        >
+          {files.map(file => (
+            <Image
+              style={{ width: constants.width, height: constants.height / 2.5 }}
+              key={file.id}
+              source={{ uri: file.url }}
+            />
+          ))}
+        </Swiper>
+      </Container>
+    </>
   );
 };
 
