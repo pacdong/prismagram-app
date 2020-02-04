@@ -6,7 +6,7 @@ import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
 import { Alert } from "react-native";
 import { useMutation } from "react-apollo-hooks";
-import { LOG_IN, CONFIRM_SECRET } from "./AuthQueries";
+import { LOG_IN, CONFIRM_SECRET, CONFIRM_SECRET_CODE } from "./AuthQueries";
 import { useLogIn } from "../../AuthContext";
 
 const View = styled.View`
@@ -19,30 +19,30 @@ export default ({ navigation }) => {
   const confirmInput = useInput("");
   const logIn = useLogIn();
   const [loading, setLoading] = useState(false);
-  const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
+  const [confirmSecretCodeMutation] = useMutation(CONFIRM_SECRET_CODE, {
     variables: {
       secret: confirmInput.value,
-      email: navigation.getParam("email")
+      phoneNumber: navigation.getParam("phonNumber")
     }
   });
   const handleConfirm = async () => {
     const { value } = confirmInput;
     if (value === "" || !value.includes(" ")) {
-      return Alert.alert("Invalid secret");
+      return Alert.alert("잘못된 시크릿 코드입니다.");
     }
     try {
       setLoading(true);
       const {
-        data: { confirmSecret }
-      } = await confirmSecretMutation();
-      if (confirmSecret !== "" || confirmSecret !== false) {
-        logIn(confirmSecret);
+        data: { confirmSecretCode }
+      } = await confirmSecretCodeMutation();
+      if (confirmSecretCode !== "" || confirmSecretCode !== false) {
+        logIn(confirmSecretCode);
       } else {
-        Alert.alert("Wrong secret!");
+        Alert.alert("맞지 않는 시크릿 코드입니다.!");
       }
     } catch (e) {
       console.log(e);
-      Alert.alert("Can't confirm secret");
+      Alert.alert("로그인 할 수 없습니다.");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default ({ navigation }) => {
       <View>
         <AuthInput
           {...confirmInput}
-          placeholder="Secret"
+          placeholder="Secret Code"
           returnKeyType="send"
           onSubmitEditing={handleConfirm}
           autoCorrect={false}

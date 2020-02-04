@@ -6,7 +6,7 @@ import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
 import { Alert } from "react-native";
 import { useMutation } from "react-apollo-hooks";
-import { LOG_IN, LOG_IN_CODE } from "./AuthQueries";
+import { LOG_IN_CODE } from "./AuthQueries";
 
 const View = styled.View`
   justify-content: center;
@@ -15,34 +15,34 @@ const View = styled.View`
 `;
 
 export default ({ navigation }) => {
-  const PhoneNumberInput = useInput(navigation.getParam("phoneNumber", ""));
+  const phoneNumberInput = useInput(navigation.getParam("phoneNumber", ""));
   const [loading, setLoading] = useState(false);
-  const [requestSecretMutation] = useMutation(LOG_IN_CODE, {
+  const [requestSecretCodeMutation] = useMutation(LOG_IN_CODE, {
     variables: {
-      phoneNumber: PhoneNumberInput.value
+      phoneNumber: phoneNumberInput.value
     }
   });
   const handleLogin = async () => {
-    const { value } = PhoneNumberInput;
-    const PhoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
+    let { value } = phoneNumberInput;
+    const phoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
     if (value === "") {
       return Alert.alert("휴대폰 번호를 입력하세요.");
-    } else if (!PhoneRegex.test(value)) {
+    } else if (!phoneRegex.test(value)) {
       return Alert.alert("핸드폰 번호가 올바르지 않습니다.");
     }
     try {
       setLoading(true);
+      value = value.replace(/-/g, "");
       const {
-        data: { requestSecret }
-      } = await requestSecretMutation();
-      if (requestSecret) {
-        await requestSecretMutation();
+        data: { requestSecretCode }
+      } = await requestSecretCodeMutation();
+      if (requestSecretCode) {
         Alert.alert("문자함을 확인하세요.");
-        navigation.navigate("Confirm", { email: value });
+        navigation.navigate("Confirm", { phoneNumber: value });
         return;
       } else {
-        Alert.alert("Can't log in now");
-        navigation.navigate("Signup", { email: value });
+        Alert.alert("로그인 할 수 없습니다.");
+        navigation.navigate("Signup", { phoneNumber: value });
       }
     } catch (e) {
     } finally {
@@ -62,7 +62,7 @@ export default ({ navigation }) => {
           autoCorrect={false}
         /> */}
         <AuthInput
-          {...PhoneNumberInput}
+          {...phoneNumberInput}
           placeholder="휴대폰 번호"
           keyboardType="phone-pad"
           returnKeyType="done"

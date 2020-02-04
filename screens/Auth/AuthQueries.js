@@ -7,8 +7,8 @@ export const LOG_IN = gql`
 `;
 
 export const LOG_IN_CODE = gql`
-  mutation requestSecretCode($PhoneNumber: Number!) {
-    requestSecretCode(PhoneNumber: $PhoneNumber)
+  mutation requestSecretCode($phoneNumber: String!) {
+    requestSecretCode(phoneNumber: $phoneNumber)
   }
 `;
 
@@ -18,14 +18,14 @@ export const CREATE_ACCOUNT = gql`
     $email: String
     $firstName: String
     $lastName: String
-    $PhoneNumber: Number!
+    $phoneNumber: String!
   ) {
     createAccount(
       username: $username
       email: $email
       firstName: $firstName
       lastName: $lastName
-      PhoneNumber: $Number
+      phoneNumber: $String
     )
   }
 `;
@@ -37,7 +37,7 @@ export const CONFIRM_SECRET = gql`
 `;
 
 export const CONFIRM_SECRET_CODE = gql`
-  mutation confirmSecretCode($secretCode: Number!, $PhoneNumber: Number!) {
-    confirmSecretCode(secretCode: $secretCode, PhoneNumber: $PhoneNumber)
+  mutation confirmSecretCode($secretCode: String!, $phoneNumber: String!) {
+    confirmSecretCode(secretCode: $secretCode, phoneNumber: $phoneNumber)
   }
 `;
