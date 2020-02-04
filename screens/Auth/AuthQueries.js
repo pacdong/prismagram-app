@@ -27,3 +27,35 @@ export const CONFIRM_SECRET = gql`
     confirmSecret(secret: $secret, email: $email)
   }
 `;
+
+// CUSTUMIZE
+
+// export const LOG_IN_CODE = gql`
+//   mutation requestSecretCode($phoneNumber: String!) {
+//     requestSecretCode(phoneNumber: $phoneNumber)
+//   }
+// `;
+
+// export const CONFIRM_SECRET_CODE = gql`
+//   mutation confirmSecretCode($secretCode: String!, $phoneNumber: String!) {
+//     confirmSecretCode(secretCode: $secretCode, phoneNumber: $phoneNumber)
+//   }
+// `;
+
+// export const CREATE_ACCOUNT = gql`
+//   mutation createAccount(
+//     $username: String!
+//     $email: String
+//     $firstName: String
+//     $lastName: String
+//     $phoneNumber: String!
+//   ) {
+//     createAccount(
+//       username: $username
+//       email: $email
+//       firstName: $firstName
+//       lastName: $lastName
+//       phoneNumber: $String
+//     )
+//   }
+// `;

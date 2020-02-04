@@ -1,3 +1,5 @@
+// Custumize
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { TouchableWithoutFeedback, Keyboard } from "react-native";
