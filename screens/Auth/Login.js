@@ -22,9 +22,10 @@ export default ({ navigation }) => {
       phoneNumber: phoneNumberInput.value
     }
   });
+
   const handleLogin = async () => {
-    let { value } = phoneNumberInput;
-    const phoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
+    const { value } = phoneNumberInput;
+    const phoneRegex = /^(010|011|016|017|018|019)\d{3,4}\d{4}$/u;
     if (value === "") {
       return Alert.alert("휴대폰 번호를 입력하세요.");
     } else if (!phoneRegex.test(value)) {
@@ -32,7 +33,6 @@ export default ({ navigation }) => {
     }
     try {
       setLoading(true);
-      value = value.replace(/-/g, "");
       const {
         data: { requestSecretCode }
       } = await requestSecretCodeMutation();

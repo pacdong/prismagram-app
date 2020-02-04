@@ -6,7 +6,7 @@ import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
 import { Alert } from "react-native";
 import { useMutation } from "react-apollo-hooks";
-import { LOG_IN, CONFIRM_SECRET, CONFIRM_SECRET_CODE } from "./AuthQueries";
+import { CONFIRM_SECRET_CODE } from "./AuthQueries";
 import { useLogIn } from "../../AuthContext";
 
 const View = styled.View`
@@ -21,14 +21,14 @@ export default ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [confirmSecretCodeMutation] = useMutation(CONFIRM_SECRET_CODE, {
     variables: {
-      secret: confirmInput.value,
-      phoneNumber: navigation.getParam("phonNumber")
+      secretCode: confirmInput.value,
+      phoneNumber: navigation.getParam("phoneNumber")
     }
   });
   const handleConfirm = async () => {
     const { value } = confirmInput;
-    if (value === "" || !value.includes(" ")) {
-      return Alert.alert("잘못된 시크릿 코드입니다.");
+    if (value === "" || value.includes(" ")) {
+      return Alert.alert("Invalid secret");
     }
     try {
       setLoading(true);
@@ -38,11 +38,11 @@ export default ({ navigation }) => {
       if (confirmSecretCode !== "" || confirmSecretCode !== false) {
         logIn(confirmSecretCode);
       } else {
-        Alert.alert("맞지 않는 시크릿 코드입니다.!");
+        Alert.alert("잘못된 코드입니다.");
       }
     } catch (e) {
       console.log(e);
-      Alert.alert("로그인 할 수 없습니다.");
+      Alert.alert("로그인할 수 없습니다.");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default ({ navigation }) => {
       <View>
         <AuthInput
           {...confirmInput}
-          placeholder="Secret Code"
+          placeholder="Secret"
           returnKeyType="send"
           onSubmitEditing={handleConfirm}
           autoCorrect={false}

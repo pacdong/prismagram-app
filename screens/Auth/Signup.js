@@ -47,21 +47,20 @@ export default ({ navigation }) => {
       username: usernameInput.value,
       email: emailInput.value,
       firstName: fNameInput.value,
-      lastName: PhoneNumberInput.value
+      phoneNumber: PhoneNumberInput.value
     }
   });
   const handleSingup = async () => {
     const { value: email } = emailInput;
     const { value: fName } = fNameInput;
-    const { value: lName } = PhoneNumberInput;
+    const { value: PhoneNo } = PhoneNumberInput;
     const { value: username } = usernameInput;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const PhoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
     if (!emailRegex.test(email)) {
       return Alert.alert("E-mail 주소가 올바르지 않습니다.");
     }
-    if (!PhoneRegex.test(lName)) {
-      // lName => Phone Number
+    if (!PhoneRegex.test(PhoneNo)) {
       return Alert.alert("전화번호가 올바르지 않습니다.");
     }
     if (fName === "") {
@@ -77,12 +76,12 @@ export default ({ navigation }) => {
       } = await createAccountMutation();
       if (createAccount) {
         Alert.alert("Account created", "Log in now!");
-        navigation.navigate("Login", { email });
+        navigation.navigate("Login", { phoneNumber });
       }
     } catch (e) {
       console.log(e);
       Alert.alert("Username taken.", "Log in instead");
-      navigation.navigate("Login", { email });
+      navigation.navigate("Login", { phoneNumber });
     } finally {
       setLoading(false);
     }
