@@ -6,7 +6,7 @@ import AuthInput from "../../components/AuthInput";
 import useInput from "../../hooks/useInput";
 import { Alert } from "react-native";
 import { useMutation } from "react-apollo-hooks";
-import { LOG_IN, LOG_IN_CODE } from "./AuthQueries";
+import { LOG_IN } from "./AuthQueries";
 
 const View = styled.View`
   justify-content: center;
@@ -15,20 +15,22 @@ const View = styled.View`
 `;
 
 export default ({ navigation }) => {
-  const PhoneNumberInput = useInput(navigation.getParam("phoneNumber", ""));
+  const emailInput = useInput(navigation.getParam("email", ""));
   const [loading, setLoading] = useState(false);
-  const [requestSecretMutation] = useMutation(LOG_IN_CODE, {
+  const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: {
-      phoneNumber: PhoneNumberInput.value
+      email: emailInput.value
     }
   });
   const handleLogin = async () => {
-    const { value } = PhoneNumberInput;
-    const PhoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
+    const { value } = emailInput;
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (value === "") {
-      return Alert.alert("휴대폰 번호를 입력하세요.");
-    } else if (!PhoneRegex.test(value)) {
-      return Alert.alert("핸드폰 번호가 올바르지 않습니다.");
+      return Alert.alert("Email can't be empty");
+    } else if (!value.includes("@") || !value.includes(".")) {
+      return Alert.alert("Please write an email");
+    } else if (!emailRegex.test(value)) {
+      return Alert.alert("That email is invalid");
     }
     try {
       setLoading(true);
@@ -37,7 +39,7 @@ export default ({ navigation }) => {
       } = await requestSecretMutation();
       if (requestSecret) {
         await requestSecretMutation();
-        Alert.alert("문자함을 확인하세요.");
+        Alert.alert("Check your email");
         navigation.navigate("Confirm", { email: value });
         return;
       } else {
@@ -53,19 +55,11 @@ export default ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
-        {/* <AuthInput
+        <AuthInput
           {...emailInput}
           placeholder="Email"
           keyboardType="email-address"
           returnKeyType="send"
-          onSubmitEditing={handleLogin}
-          autoCorrect={false}
-        /> */}
-        <AuthInput
-          {...PhoneNumberInput}
-          placeholder="휴대폰 번호"
-          keyboardType="phone-pad"
-          returnKeyType="done"
           onSubmitEditing={handleLogin}
           autoCorrect={false}
         />

@@ -38,7 +38,7 @@ const NaverContainer = styled.View`
 
 export default ({ navigation }) => {
   const fNameInput = useInput("");
-  const lNameInput = useInput("");
+  const PhoneNumberInput = useInput("");
   const emailInput = useInput(navigation.getParam("email", ""));
   const usernameInput = useInput("");
   const [loading, setLoading] = useState(false);
@@ -47,23 +47,28 @@ export default ({ navigation }) => {
       username: usernameInput.value,
       email: emailInput.value,
       firstName: fNameInput.value,
-      lastName: lNameInput.value
+      lastName: PhoneNumberInput.value
     }
   });
   const handleSingup = async () => {
     const { value: email } = emailInput;
     const { value: fName } = fNameInput;
-    const { value: lName } = lNameInput;
+    const { value: lName } = PhoneNumberInput;
     const { value: username } = usernameInput;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const PhoneRegex = /^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$/;
     if (!emailRegex.test(email)) {
-      return Alert.alert("That email is invalid");
+      return Alert.alert("E-mail 주소가 올바르지 않습니다.");
+    }
+    if (!PhoneRegex.test(lName)) {
+      // lName => Phone Number
+      return Alert.alert("전화번호가 올바르지 않습니다.");
     }
     if (fName === "") {
-      return Alert.alert("I need your name");
+      return Alert.alert("사용자 이름이 필요합니다.");
     }
     if (username === "") {
-      return Alert.alert("Invalid username");
+      return Alert.alert("사용할 수 없는 닉네임입니다.");
     }
     try {
       setLoading(true);
@@ -130,10 +135,9 @@ export default ({ navigation }) => {
     }
   };
 
-  const updateFormData = (email, firstName, lastName) => {
+  const updateFormData = (email, firstName) => {
     emailInput.setValue(email);
     fNameInput.setValue(firstName);
-    lNameInput.setValue(lastName);
     const [username] = email.split("@");
     usernameInput.setValue(username);
   };
@@ -143,24 +147,25 @@ export default ({ navigation }) => {
       <View>
         <AuthInput
           {...fNameInput}
-          placeholder="First name"
+          placeholder="사용자 이름"
           autoCapitalize="words"
         />
         <AuthInput
-          {...lNameInput}
-          placeholder="Last name"
+          {...PhoneNumberInput}
+          placeholder="전화번호"
+          keyboardType="phone-pad"
           autoCapitalize="words"
         />
         <AuthInput
           {...emailInput}
-          placeholder="Email"
+          placeholder="E-mail"
           keyboardType="email-address"
           returnKeyType="send"
           autoCorrect={false}
         />
         <AuthInput
           {...usernameInput}
-          placeholder="Username"
+          placeholder="별명"
           returnKeyType="send"
           autoCorrect={false}
         />
@@ -181,7 +186,8 @@ export default ({ navigation }) => {
             text="Connect Google"
           />
         </GoogleContainer>
-        <KakaoContainer>
+        {/* 카카오톡 / 네이버 로그인 버튼 */}
+        {/* <KakaoContainer>
           <AuthButton
             bgColor={"#FFCD00"}
             loading={false}
@@ -194,7 +200,7 @@ export default ({ navigation }) => {
             loading={false}
             text="Connect Naver"
           />
-        </NaverContainer>
+        </NaverContainer> */}
       </View>
     </TouchableWithoutFeedback>
   );
