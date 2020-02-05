@@ -11,6 +11,7 @@ import RigHome from "../screens/Tabs/RigHome";
 import MessagesLink from "../components/MessagesLink";
 import { View } from "react-native";
 import NavIcon from "../components/NavIcon";
+import MatIcon from "../components/MatIcon";
 import { LOGO } from "../Icon";
 import { stackStyles } from "./config";
 
@@ -111,10 +112,7 @@ export default createBottomTabNavigator(
       screen: stackFactory(RigHome),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
-          <NavIcon
-            focused={focused}
-            name={Platform.OS === "ios" ? "ios-crane" : "md-crane"}
-          />
+          <MatIcon focused={focused} name={"crane"} />
         )
       }
     }

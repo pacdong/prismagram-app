@@ -11,6 +11,8 @@ const Container = styled.View``;
 
 const Card = styled.View`
   background-color: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 `;
 
 const HeaderHelloContainer = styled.View`
@@ -86,6 +88,7 @@ const MainPost = ({ user, location, files = [] }) => {
           text={"Search"}
           onPress={() => null}
           placeholder={"Search"}
+          onChangeText={"onChange"}
         />
         <IconContainer>
           <Image
