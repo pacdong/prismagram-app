@@ -11,11 +11,12 @@ const Container = styled.View`
 
 const TextInput = styled.TextInput`
   width: ${constants.width - 40};
-  height: 35;
+  height: 34;
   padding: 10px;
-  background-color: ${props => props.theme.lightGreyColor};
-  border: 0.5px solid ${props => props.theme.darkGreyColor};
-  border-radius: 5px;
+  background-color: ${props => props.theme.superLightGreyColor};
+  border: 0.5px solid ${props => props.theme.lightGreyColor};
+  border-radius: 20px;
+  text-align: center;
 `;
 
 const SearchInput = ({
@@ -42,7 +43,7 @@ const SearchInput = ({
   </Container>
 );
 
-AuthInput.propTypes = {
+SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   keyboardType: PropTypes.oneOf([

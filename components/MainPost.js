@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import Swiper from "react-native-swiper";
 import constants from "../constants";
-import { Logo } from "../Icon";
+import SearchInput from "./SearchInput";
 
 const Container = styled.View``;
 
@@ -14,8 +14,10 @@ const Card = styled.View`
 `;
 
 const HeaderHelloContainer = styled.View`
+  margin-top: 40px;
   margin-left: 18px;
   margin-right: 18px;
+  margin-bottom: 18px;
 `;
 
 const HederLogoContainer = styled.View`
@@ -26,7 +28,8 @@ const HederLogoContainer = styled.View`
 `;
 
 const LogoContainer = styled.Image`
-  width: ${constants.width / 16};
+  width: 24px;
+  height: 44px;
 `;
 
 const Hello = styled.Text`
@@ -79,6 +82,11 @@ const MainPost = ({ user, location, files = [] }) => {
             />
           </HederLogoContainer>
         </HeaderHelloContainer>
+        <SearchInput
+          text={"Search"}
+          onPress={() => null}
+          placeholder={"Search"}
+        />
         <IconContainer>
           <Image
             style={{ height: 40, width: 40, borderRadius: 20 }}
