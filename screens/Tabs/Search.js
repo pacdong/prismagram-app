@@ -1,40 +1,6 @@
-import React, { useState } from "react";
-import { ScrollView, RefreshControl } from "react-native";
+import React from "react";
 import styled from "styled-components";
-import { gql } from "apollo-boost";
-import Loader from "../../components/Loader";
-import { useQuery } from "react-apollo-hooks";
-import MainPost from "../../components/MainPost";
-
-const FEED_QUERY = gql`
-  {
-    seeFeed {
-      id
-      location
-      caption
-      user {
-        id
-        avatar
-        username
-      }
-      files {
-        id
-        url
-      }
-      likeCount
-      isLiked
-      comments {
-        id
-        text
-        user {
-          id
-          username
-        }
-      }
-      createdAt
-    }
-  }
-`;
+import SearchBar from "../../components/SearchBar";
 
 const View = styled.View`
   justify-content: center;
@@ -44,32 +10,27 @@ const View = styled.View`
 
 const Text = styled.Text``;
 
-export default () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const { loading, data, refetch } = useQuery(FEED_QUERY);
-  const refresh = async () => {
-    try {
-      setRefreshing(true);
-      await refetch();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setRefreshing(false);
-    }
+export default class extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: (
+      <SearchBar
+        value={this.state.term}
+        onChange={this.onChange}
+        onSubmit={() => {}}
+      />
+    )
+  });
+  state = {
+    term: ""
   };
-  return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-      }
-    >
-      {loading ? (
-        <Loader />
-      ) : (
-        data &&
-        data.seeFeed &&
-        data.seeFeed.map(post => <MainPost key={post.id} {...post} />)
-      )}
-    </ScrollView>
-  );
-};
+  onChange = text => {
+    this.setState({ text });
+  };
+  render() {
+    return (
+      <View>
+        <Text>Search</Text>
+      </View>
+    );
+  }
+}

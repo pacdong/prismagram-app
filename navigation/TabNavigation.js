@@ -7,6 +7,7 @@ import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
+import RigHome from "../screens/Tabs/RigHome";
 import MessagesLink from "../components/MessagesLink";
 import { View } from "react-native";
 import NavIcon from "../components/NavIcon";
@@ -44,9 +45,7 @@ export default createBottomTabNavigator(
       }
     },
     Search: {
-      screen: stackFactory(Search, {
-        title: "Search"
-      }),
+      screen: stackFactory(Search),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
           <NavIcon
@@ -107,9 +106,21 @@ export default createBottomTabNavigator(
           />
         )
       }
+    },
+    RigHome: {
+      screen: stackFactory(RigHome),
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <NavIcon
+            focused={focused}
+            name={Platform.OS === "ios" ? "ios-crane" : "md-crane"}
+          />
+        )
+      }
     }
   },
   {
+    initialRouteName: "Search",
     tabBarOptions: {
       showLabel: false,
       style: {
