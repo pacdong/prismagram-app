@@ -139,7 +139,7 @@ export default createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "RigHome",
+    initialRouteName: "Profile",
     tabBarOptions: {
       showLabel: false,
       style: {
