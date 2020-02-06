@@ -15,18 +15,33 @@ import NavIcon from "../components/NavIcon";
 import MatIcon from "../components/MatIcon";
 import { LOGO } from "../Icon";
 import { stackStyles } from "./config";
+import styles from "../styles";
+import { noContext } from "optimism";
 
 const stackFactory = (initialRoute, customConfig) =>
-  createStackNavigator({
-    InitialRoute: {
-      screen: initialRoute,
-      navigationOptions: {
-        ...customConfig,
-        headerStyle: { ...stackStyles }
+  createStackNavigator(
+    {
+      InitialRoute: {
+        screen: initialRoute,
+        navigationOptions: {
+          ...customConfig
+        }
+      },
+      Detail: {
+        screen: Detail,
+        navigationOptions: {
+          headerTintColor: styles.blackColor,
+          headerBackTitle: noContext,
+          title: "Photo"
+        }
       }
     },
-    Detail
-  });
+    {
+      defaultNavigationOptions: {
+        headerStyle: { ...stackStyles }
+      }
+    }
+  );
 
 export default createBottomTabNavigator(
   {
@@ -48,7 +63,9 @@ export default createBottomTabNavigator(
       }
     },
     Search: {
-      screen: stackFactory(Search),
+      screen: stackFactory(Search, {
+        headerBackTitle: null
+      }),
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
           <NavIcon

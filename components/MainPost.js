@@ -102,6 +102,7 @@ const IconContainer = styled.View`
 const IconText = styled.Text`
   font-weight: 800;
   font-size: 16px;
+  opacity: 0.7;
 `;
 
 const MainPost = ({ user, location, files = [] }) => {
