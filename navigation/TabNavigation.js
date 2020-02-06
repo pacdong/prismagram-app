@@ -109,8 +109,10 @@ export default createBottomTabNavigator(
       }
     },
     RigHome: {
-      screen: stackFactory(RigHome),
+      screen: RigHome,
       navigationOptions: {
+        headerMode: "none",
+        title: "none",
         tabBarIcon: ({ focused }) => (
           <MatIcon focused={focused} name={"crane"} />
         )
@@ -118,7 +120,7 @@ export default createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: "RigHome",
     tabBarOptions: {
       showLabel: false,
       style: {

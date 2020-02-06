@@ -5,6 +5,7 @@ import { gql } from "apollo-boost";
 import Loader from "../../components/Loader";
 import { useQuery } from "react-apollo-hooks";
 import MainPost from "../../components/MainPost";
+import SearchBar from "../../components/SearchBar";
 
 const FEED_QUERY = gql`
   {

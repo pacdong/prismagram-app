@@ -13,13 +13,14 @@ const Card = styled.View`
   background-color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  box-shadow: 3px 3px 3px ${props => props.theme.superLightGreyColor};
 `;
 
 const HeaderHelloContainer = styled.View`
-  margin-top: 40px;
+  margin-top: 100px;
   margin-left: 18px;
   margin-right: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
 `;
 
 const HederLogoContainer = styled.View`
@@ -55,6 +56,27 @@ const HeaderUserContainer = styled.View`
   margin-left: 10px;
 `;
 
+const RecentText = styled.Text`
+  font-weight: 800;
+  font-size: 24px;
+  margin-left: 18px;
+  margin-top: 20px;
+`;
+
+const PostContainer = styled.View`
+  margin-top: 16px;
+  margin-left: 18px;
+`;
+
+const PostCard = styled.View`
+  background-color: white;
+  box-shadow: 3px 3px 3px ${props => props.theme.superLightGreyColor};
+  width: ${constants.width / 1.5};
+  height: ${constants.height / 3};
+  margin-bottom: 28px;
+  justify-content: center;
+`;
+
 const Bold = styled.Text`
   font-weight: 500;
 `;
@@ -63,10 +85,24 @@ const Location = styled.Text`
 `;
 
 const IconsContainer = styled.View`
-  padding: 10px;
+  margin-top: 26px;
+  width: ${constants.width / 1.2};
+  height: ${constants.height / 10};
   flex-direction: row;
+  align-self: center;
+  justify-content: space-between;
 `;
-const IconContainer = styled.View``;
+const IconContainer = styled.View`
+  width: ${constants.width / 6};
+  height: ${constants.height / 16};
+  justify-content: center;
+  align-items: center;
+`;
+
+const IconText = styled.Text`
+  font-weight: 800;
+  font-size: 16px;
+`;
 
 const MainPost = ({ user, location, files = [] }) => {
   return (
@@ -90,42 +126,98 @@ const MainPost = ({ user, location, files = [] }) => {
           placeholder={"Search"}
           onChangeText={"onChange"}
         />
-        <IconContainer>
-          <Image
-            style={{ height: 40, width: 40, borderRadius: 20 }}
-            source={require("../assets/RigIcon.svg")}
-          />
-        </IconContainer>
+        <IconsContainer>
+          <Touchable>
+            <IconContainer>
+              <Image
+                style={{
+                  widhth: constants.width / 7,
+                  height: constants.width / 7
+                }}
+                source={require("../assets/RigIcon.png")}
+              />
+              <IconText>{"리깅"}</IconText>
+            </IconContainer>
+          </Touchable>
+          <Touchable>
+            <IconContainer>
+              <Image
+                style={{
+                  widhth: constants.width / 7,
+                  height: constants.width / 7
+                }}
+                source={require("../assets/ScheduleIcon.png")}
+              />
+              <IconText>{"일정"}</IconText>
+            </IconContainer>
+          </Touchable>
+          <Touchable>
+            <IconContainer>
+              <Image
+                style={{
+                  widhth: constants.width / 7,
+                  height: constants.width / 7
+                }}
+                source={require("../assets/LenchIcon.png")}
+              />
+              <IconText>{"정비"}</IconText>
+            </IconContainer>
+          </Touchable>
+          <Touchable>
+            <IconContainer>
+              <Image
+                style={{
+                  widhth: constants.width / 7,
+                  height: constants.width / 7
+                }}
+                source={require("../assets/JobChangeIcon.png")}
+              />
+              <IconText>{"이직"}</IconText>
+            </IconContainer>
+          </Touchable>
+        </IconsContainer>
       </Card>
 
-      <Container>
-        <Header>
-          <Touchable>
-            <Image
-              style={{ height: 40, width: 40, borderRadius: 20 }}
-              source={{ uri: user.avatar }}
-            />
-          </Touchable>
-          <Touchable>
-            <HeaderUserContainer>
-              <Bold>{user.username}</Bold>
-              <Location>{location}</Location>
-            </HeaderUserContainer>
-          </Touchable>
-        </Header>
-        <Swiper
-          showsPagination={false}
-          style={{ height: constants.height / 2.5 }}
-        >
-          {files.map(file => (
-            <Image
-              style={{ width: constants.width, height: constants.height / 2.5 }}
-              key={file.id}
-              source={{ uri: file.url }}
-            />
-          ))}
-        </Swiper>
-      </Container>
+      <RecentText>{"최근 올라온 글"}</RecentText>
+
+      <Swiper
+        showsPagination={false}
+        style={{ height: constants.height / 2.5 }}
+      >
+        <PostContainer>
+          <PostCard>
+            <Header>
+              <Touchable>
+                <Image
+                  style={{ height: 40, width: 40, borderRadius: 20 }}
+                  source={{ uri: user.avatar }}
+                />
+              </Touchable>
+              <Touchable>
+                <HeaderUserContainer>
+                  <Bold>{user.username}</Bold>
+                  <Location>{location}</Location>
+                </HeaderUserContainer>
+              </Touchable>
+            </Header>
+            <Swiper
+              showsPagination={false}
+              style={{ height: constants.height / 2.5 }}
+            >
+              {files.map(file => (
+                <Image
+                  style={{
+                    width: constants.width / 1.7,
+                    height: constants.height / 5
+                  }}
+                  key={file.id}
+                  source={{ uri: file.url }}
+                />
+              ))}
+            </Swiper>
+          </PostCard>
+        </PostContainer>
+      </Swiper>
     </>
   );
 };
