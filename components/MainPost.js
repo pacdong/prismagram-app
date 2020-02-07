@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Platform } from "react-native";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,6 +6,10 @@ import PropTypes from "prop-types";
 import Swiper from "react-native-swiper";
 import constants from "../constants";
 import SearchInput from "./SearchInput";
+import AnswerButton from "./AnswerButton";
+import { withNavigation } from "react-navigation";
+import SquarePhoto from "./SquarePhoto";
+import Post from "./Post";
 
 const Container = styled.View``;
 
@@ -13,7 +17,7 @@ const Card = styled.View`
   background-color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  box-shadow: 3px 3px 3px ${props => props.theme.superLightGreyColor};
+  box-shadow: 3px 3px 3px rgb(216, 216, 216);
 `;
 
 const HeaderHelloContainer = styled.View`
@@ -70,7 +74,7 @@ const PostContainer = styled.View`
 
 const PostCard = styled.View`
   background-color: white;
-  box-shadow: 3px 3px 3px ${props => props.theme.superLightGreyColor};
+  box-shadow: 3px 3px 3px rgb(216, 216, 216);
   width: ${constants.width / 1.5};
   height: ${constants.height / 3};
   margin-bottom: 28px;
@@ -105,7 +109,30 @@ const IconText = styled.Text`
   opacity: 0.7;
 `;
 
-const MainPost = ({ user, location, files = [] }) => {
+const MainPost = ({
+  id,
+  user,
+  location,
+  files = [],
+  comments = [],
+  navigation
+}) => {
+  const [loading, setLoading] = useState(false);
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      if (requestSecret) {
+        Alert.alert("성공");
+        navigation.navigate("Profile", { email: value });
+        return;
+      } else {
+        Alert.alert("네트워크 상태를 확인하세요.");
+      }
+    } catch (e) {
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Card>
@@ -216,6 +243,13 @@ const MainPost = ({ user, location, files = [] }) => {
                 />
               ))}
             </Swiper>
+            <Touchable>
+              <AnswerButton
+                text="답변하기"
+                loading={loading}
+                onPress={handleLogin}
+              />
+            </Touchable>
           </PostCard>
         </PostContainer>
       </Swiper>
@@ -225,6 +259,15 @@ const MainPost = ({ user, location, files = [] }) => {
 
 MainPost.propTypes = {
   id: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  fullName: PropTypes.string.isRequired,
+  isFollowing: PropTypes.bool.isRequired,
+  isSelf: PropTypes.bool.isRequired,
+  bio: PropTypes.string.isRequired,
+  followingCount: PropTypes.number.isRequired,
+  followersCount: PropTypes.number.isRequired,
+  postsCount: PropTypes.number.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     avatar: PropTypes.string,
@@ -250,7 +293,38 @@ MainPost.propTypes = {
   ).isRequired,
   caption: PropTypes.string.isRequired,
   location: PropTypes.string,
-  createdAt: PropTypes.string.isRequired
+  createdAt: PropTypes.string.isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      user: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        avatar: PropTypes.string,
+        username: PropTypes.string.isRequired
+      }).isRequired,
+      files: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired
+        })
+      ).isRequired,
+      likeCount: PropTypes.number.isRequired,
+      isLiked: PropTypes.bool.isRequired,
+      comments: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          text: PropTypes.string.isRequired,
+          user: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            username: PropTypes.string.isRequired
+          }).isRequired
+        })
+      ).isRequired,
+      caption: PropTypes.string.isRequired,
+      location: PropTypes.string,
+      createdAt: PropTypes.string.isRequired
+    })
+  )
 };
 
-export default MainPost;
+export default withNavigation(MainPost);

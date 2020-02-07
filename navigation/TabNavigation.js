@@ -147,7 +147,7 @@ export default createBottomTabNavigator(
     }
   },
   {
-    initialRouteName: "Profile",
+    initialRouteName: "Notifications",
     tabBarOptions: {
       showLabel: false,
       style: {
