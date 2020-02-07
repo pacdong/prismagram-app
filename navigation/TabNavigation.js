@@ -18,7 +18,6 @@ import { LOGO } from "../Icon";
 import { stackStyles } from "./config";
 import styles from "../styles";
 import { noContext } from "optimism";
-import { nonExecutableDefinitionMessage } from "graphql/validation/rules/ExecutableDefinitions";
 
 const stackFactory = (initialRoute, customConfig) =>
   createStackNavigator(
@@ -38,9 +37,9 @@ const stackFactory = (initialRoute, customConfig) =>
       },
       UserDetail: {
         screen: UserDetail,
-        navigationOptions: {
-          title: "User"
-        }
+        navigationOptions: ({ navigation }) => ({
+          title: navigation.getParam("username")
+        })
       }
     },
     {
