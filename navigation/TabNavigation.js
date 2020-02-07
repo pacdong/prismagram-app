@@ -9,6 +9,7 @@ import Notifications from "../screens/Tabs/Notifications";
 import Profile from "../screens/Tabs/Profile";
 import RigHome from "../screens/Tabs/RigHome";
 import Detail from "../screens/Detail";
+import UserDetail from "../screens/UserDetail";
 import MessagesLink from "../components/MessagesLink";
 import { View } from "react-native";
 import NavIcon from "../components/NavIcon";
@@ -17,6 +18,7 @@ import { LOGO } from "../Icon";
 import { stackStyles } from "./config";
 import styles from "../styles";
 import { noContext } from "optimism";
+import { nonExecutableDefinitionMessage } from "graphql/validation/rules/ExecutableDefinitions";
 
 const stackFactory = (initialRoute, customConfig) =>
   createStackNavigator(
@@ -30,14 +32,21 @@ const stackFactory = (initialRoute, customConfig) =>
       Detail: {
         screen: Detail,
         navigationOptions: {
-          headerTintColor: styles.blackColor,
           headerBackTitle: noContext,
           title: "Photo"
+        }
+      },
+      UserDetail: {
+        screen: UserDetail,
+        navigationOptions: {
+          title: "User"
         }
       }
     },
     {
       defaultNavigationOptions: {
+        headerBackTitle: noContext,
+        headerTintColor: styles.blackColor,
         headerStyle: { ...stackStyles }
       }
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import styled from "styled-components";
 import { useQuery } from "react-apollo-hooks";
 import { gql } from "apollo-boost";
 import { POST_FRAGMENT } from "../fragments";
