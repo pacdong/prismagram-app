@@ -6,6 +6,8 @@ import { withNavigation } from "react-navigation";
 import styles from "../../styles";
 import DataInput from "../../components/DataInput";
 import EnterButton from "../../components/EnterButton";
+import useInput from "../../hooks/useInput";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Container = styled.View``;
 
@@ -51,7 +53,53 @@ const ExplainText = styled.Text`
   color: ${props => props.theme.darkGreyColor};
 `;
 
-const Notification = ({}) => {
+const Notification = ({ navigation }) => {
+  const workDistance = useInput("");
+  const workHeight = useInput("");
+  const workWeight = useInput("");
+  const [loading, setLoading] = useState(false);
+  // Rig Query 날리기
+  // const [createCaculationMutation] = useMutation(Caculation, {
+  //   variables: {
+  //     username: usernameInput.value,
+  //     email: emailInput.value,
+  //     firstName: fNameInput.value,
+  //     lastName: lNameInput.value
+  //   }
+  // });
+  const handleRigIn = async () => {
+    const { value: email } = emailInput;
+    const { value: fName } = fNameInput;
+    const { value: lName } = lNameInput;
+    const { value: username } = usernameInput;
+    const numberRegex = "^[0-9]*$";
+    if (!emailRegex.test(email)) {
+      return Alert.alert("That email is invalid");
+    }
+    if (fName === "") {
+      return Alert.alert("I need your name");
+    }
+    if (username === "") {
+      return Alert.alert("Invalid username");
+    }
+    try {
+      setLoading(true);
+      const {
+        data: { createAccount }
+      } = await createAccountMutation();
+      if (createAccount) {
+        Alert.alert("Account created", "Log in now!");
+        navigation.navigate("Login", { email });
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Username taken.", "Log in instead");
+      navigation.navigate("Login", { email });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <HeaderHelloContainer>
@@ -76,7 +124,7 @@ const Notification = ({}) => {
       <DataInput placeholder="작업 거리 입력" returnKeyType="next" />
       <DataInput placeholder="작업 높이 입력" returnKeyType="next" />
       <DataInput placeholder="작업 중량 입력" returnKeyType="done" />
-      <EnterButton text="입력" />
+      <EnterButton text="입력" onPress={() => navigation.navigate("RigHome")} />
     </>
   );
 };
