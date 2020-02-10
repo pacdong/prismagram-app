@@ -41,6 +41,11 @@ const Text = styled.Text`
 const ExplainContainer = styled.View`
   margin-top: 40px;
 `;
+
+const ExplainTextContainer = styled.View`
+  flex-direction: row;
+`;
+
 const ExplainTextHeader = styled.Text`
   font-size: 20px;
   font-weight: 600;
@@ -51,6 +56,11 @@ const ExplainText = styled.Text`
   font-size: 18px;
   font-weight: 400;
   color: ${props => props.theme.darkGreyColor};
+`;
+const ExplainStringText = styled.Text`
+  font-size: 18px;
+  font-weight: 400;
+  color: ${props => props.theme.orangeColor};
 `;
 
 const Notification = ({ navigation }) => {
@@ -117,7 +127,11 @@ const Notification = ({ navigation }) => {
         </HederLogoContainer>
         <ExplainContainer>
           <ExplainTextHeader>계산하기</ExplainTextHeader>
-          <ExplainText>작업에 필요한 정보를 입력하고</ExplainText>
+          <ExplainTextContainer>
+            <ExplainText>작업에 필요한 </ExplainText>
+            <ExplainStringText>정보를 입력</ExplainStringText>
+            <ExplainText>하고</ExplainText>
+          </ExplainTextContainer>
           <ExplainText>입력 버튼을 누르세요.</ExplainText>
         </ExplainContainer>
       </HeaderHelloContainer>
