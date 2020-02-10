@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Image, ScrollView } from "react-native";
+import { Image, ScrollView, TouchableOpacity } from "react-native";
 import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
 import Loader from "../../components/Loader";
@@ -17,6 +17,9 @@ export default () => {
   const [hasPermission, setHasPermission] = useState(false);
   const [selected, setSelected] = useState();
   const [allPhotos, setAllPhotos] = useState();
+  const changeSelected = photo => {
+    setSelected(photo);
+  };
   const getPhotos = async () => {
     try {
       const { assets } = await MediaLibrary.getAssetsAsync();
@@ -38,7 +41,7 @@ export default () => {
       }
     } catch (e) {
       console.log(e);
-      hasPermission(false);
+      setHasPermission(false);
     }
   };
   useEffect(() => {
@@ -58,14 +61,20 @@ export default () => {
               />
               <ScrollView contentContainerStyle={{ flexDirection: "row" }}>
                 {allPhotos.map(photo => (
-                  <Image
+                  <TouchableOpacity
                     key={photo.id}
-                    source={{ uri: photo.uri }}
-                    style={{
-                      width: constants.width / 3,
-                      height: constants.height / 6
-                    }}
-                  />
+                    onPress={() => changeSelected(photo)}
+                  >
+                    <Image
+                      key={photo.id}
+                      source={{ uri: photo.uri }}
+                      style={{
+                        width: constants.width / 3,
+                        height: constants.height / 6,
+                        opacity: photo.id === selected.id ? 0.5 : 1
+                      }}
+                    />
+                  </TouchableOpacity>
                 ))}
               </ScrollView>
             </>
