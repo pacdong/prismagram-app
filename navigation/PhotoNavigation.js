@@ -5,6 +5,7 @@ import TakePhoto from "../screens/Photo/TakePhoto";
 import UploadPhoto from "../screens/Photo/UploadPhoto";
 import { stackStyles } from "./config";
 import styles from "../styles";
+import { noContext } from "optimism";
 
 const PhotoTabs = createMaterialTopTabNavigator(
   {
@@ -45,16 +46,23 @@ export default createStackNavigator(
     Tabs: {
       screen: PhotoTabs,
       navigationOptions: {
-        title: "Choose Photo"
+        title: "Choose Photo",
+        headerBackTitle: null
       }
     },
-    UploadPhoto
+    Upload: {
+      screen: UploadPhoto,
+      navigationOptions: {
+        title: "Upload"
+      }
+    }
   },
   {
     defaultNavigationOptions: {
       headerStyle: {
         ...stackStyles
-      }
+      },
+      headerTintColor: styles.blackColor
     }
   }
 );
