@@ -7,5 +7,6 @@ export default {
   redColor: "#ED4956",
   blueColor: "#3897f0",
   darkBlueColor: "#003569",
-  orangeColor: "#FF9500"
+  orangeColor: "#FF9500",
+  shadowColor: "rgb(216, 216, 216)"
 };

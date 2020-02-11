@@ -10,6 +10,7 @@ import AnswerButton from "./AnswerButton";
 import { withNavigation } from "react-navigation";
 import SquarePhoto from "./SquarePhoto";
 import Post from "./Post";
+import styles from "../styles";
 
 const Container = styled.View``;
 
@@ -17,7 +18,7 @@ const Card = styled.View`
   background-color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  box-shadow: 3px 3px 3px rgb(216, 216, 216);
+  box-shadow: 3px 3px 3px ${styles.darkGreyColor};
 `;
 
 const HeaderHelloContainer = styled.View`
@@ -74,7 +75,7 @@ const PostContainer = styled.View`
 
 const PostCard = styled.View`
   background-color: white;
-  box-shadow: 3px 3px 3px rgb(216, 216, 216);
+  box-shadow: 3px 3px 3px ${styles.darkGreyColor};
   width: ${constants.width / 1.5};
   height: ${constants.height / 3};
   margin-bottom: 28px;
